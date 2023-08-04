@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_app/components/drawer.dart';
 import 'package:social_media_app/components/text_field.dart';
 import 'package:social_media_app/components/wall_post.dart';
+
+import 'profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -42,17 +45,31 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  //navigate to profile page
+  void goToProfilePage() {
+    //pop menu drawer
+    Navigator.pop(context);
+    //go to menu page
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ProfilePage(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MyDrawer(
+        onProfileTap: goToProfilePage,
+        onSignOutTap: signOut,
+      ),
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        title: const Center(child: Text("ABC")),
+        centerTitle: true,
+        title: const Text("ABC"),
         backgroundColor: Colors.grey[900],
-        actions: [
-          //sign out button
-          IconButton(onPressed: signOut, icon: const Icon(Icons.logout))
-        ],
       ),
       body: Center(
         child: Column(
